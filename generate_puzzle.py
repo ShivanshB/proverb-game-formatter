@@ -23,7 +23,6 @@ user_input_data = {
     "integers": []
 }
 
-
 # params
 # --------------------------------------
 WIDTH = 612.0 # default pagesize letter
@@ -214,10 +213,10 @@ def draw_circles(c):
         # writing number
         c.drawString(num_x, num_y, num)
 
-def log_proverb(proverb):
+def log_proverb(proverb, filepath):
     # logging the proverb and it's date and time in a csv file
-    file_exists = os.path.isfile(LOG_FILENAME)
-    with open(LOG_FILENAME, 'a', newline='') as file:
+    file_exists = os.path.isfile(filepath)
+    with open(filepath, 'a', newline='') as file:
         writer = csv.writer(file)
         # write header if the file doesn't exist
         if not file_exists:
@@ -489,6 +488,14 @@ def draw_logo(c):
             c.setFont(BODY_FONT, LOGO_NORMAL_FONT_SIZE)
             c.drawString(PADDING + ch_width, y_coord, lines[i][1])
 
+def check_log_directory(log_directory):
+    """ Ensure the log directory exists, create if it doesn't. """
+    if not os.path.exists(log_directory):
+        os.makedirs(log_directory)
+        print(f"Created log directory at: {log_directory}")
+    else:
+        print(f"Log directory already exists at: {log_directory}")
+
 def generate_puzzle(filename, proverb, clue='', prev='', reveal_letters=[]):
     
     # initialize file structure if not existing
@@ -496,7 +503,6 @@ def generate_puzzle(filename, proverb, clue='', prev='', reveal_letters=[]):
     
     # create canvas in correct folder
     filepath = FOLDER + '/' + filename
-    print(filepath)
     c = canvas.Canvas(filepath, pagesize=letter)
 
     # collapses all spaces into single space
@@ -542,7 +548,10 @@ def generate_puzzle(filename, proverb, clue='', prev='', reveal_letters=[]):
     draw_footer(c, clue, prev, num_lines)
     
     # add proverb and date/time to CSV file log.csv
-    log_proverb(''.join(proverb))
+    log_filepath = FOLDER + '/logs/' 
+    check_log_directory(log_filepath)
+    log_filepath += LOG_FILENAME
+    log_proverb(''.join(proverb), log_filepath)
     
     c.showPage()
     c.save()
@@ -624,7 +633,6 @@ def get_user_input():
 
 if __name__ == '__main__':
     get_user_input()
-    print(DATA_SUBMITTED)
     if DATA_SUBMITTED:
         generate_puzzle(filename=user_input_data["filename"],
                         proverb=user_input_data["proverb"],
