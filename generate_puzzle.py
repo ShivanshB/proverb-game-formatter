@@ -226,10 +226,24 @@ def log_proverb(proverb):
         writer.writerow([date_time, proverb])
 
 def setup_file_structure():
-    # create proverb_puzzles folder if it doesn't exist
-    directory = os.path.dirname(FOLDER)
-    if not os.path.exists(directory):
-        os.makedirs(directory)
+    # Get the path to the user's home directory
+    home_directory = os.path.expanduser('~')
+    # Construct the path to the Documents directory
+    documents_directory = os.path.join(home_directory, 'Documents')
+    # Define the path to the puzzles folder within the Documents directory
+    puzzles_directory = os.path.join(documents_directory, 'puzzles')
+    
+    # Print the path where the puzzles directory will be created or verified
+    print(f"Creating or using existing folder at: {puzzles_directory}")
+    
+    # Check if the puzzles directory exists, and create it if it does not
+    if not os.path.exists(puzzles_directory):
+        os.makedirs(puzzles_directory)
+        print("Folder created successfully.")
+    else:
+        print("Folder already exists.")
+    
+    return puzzles_directory
 
 def clean_proverb(proverb):
     # removing all special character
@@ -478,10 +492,11 @@ def draw_logo(c):
 def generate_puzzle(filename, proverb, clue='', prev='', reveal_letters=[]):
     
     # initialize file structure if not existing
-    setup_file_structure()
+    FOLDER = setup_file_structure()
     
     # create canvas in correct folder
-    filepath = FOLDER + filename
+    filepath = FOLDER + '/' + filename
+    print(filepath)
     c = canvas.Canvas(filepath, pagesize=letter)
 
     # collapses all spaces into single space
