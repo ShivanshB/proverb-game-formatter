@@ -213,16 +213,16 @@ def draw_circles(c):
         # writing number
         c.drawString(num_x, num_y, num)
 
-def log_proverb(proverb, filepath):
+def log_proverb(proverb, filename, clue, hidden_letters, filepath):
     # logging the proverb and it's date and time in a csv file
     file_exists = os.path.isfile(filepath)
     with open(filepath, 'a', newline='') as file:
         writer = csv.writer(file)
         # write header if the file doesn't exist
         if not file_exists:
-            writer.writerow(['Date and Time', 'Proverb'])
+            writer.writerow(['Date and Time', 'Proverb', 'Filename', 'Clue', 'Hidden Letters'])
         date_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S") # Year-Month-Day Hour:Minute:Second
-        writer.writerow([date_time, proverb])
+        writer.writerow([date_time, proverb, filename, clue, hidden_letters])
 
 def setup_file_structure():
     # Get the path to the user's home directory
@@ -381,7 +381,7 @@ def draw_description(c):
     line1 = ["Determine the ", "P", "roverb, ", "A", "dage, ", "S", 
              "aying, or ", "S", "aw by converting the triangled numbers"]
     bold = [False, True, False, True, False, True, False, True, False]
-    line_2 = "to letters by connecting the boxes using the corresponding circular alphanumeric key."
+    line_2 = "to letters in the connecting squares using the corresponding circular alphanumeric key."
     
     line1_widths = []
     for i, segment in enumerate(line1):
@@ -551,8 +551,8 @@ def generate_puzzle(filename, proverb, clue='', prev='', reveal_letters=[]):
     log_filepath = FOLDER + '/logs/' 
     check_log_directory(log_filepath)
     log_filepath += LOG_FILENAME
-    log_proverb(''.join(proverb), log_filepath)
-    
+    log_proverb(''.join(proverb), filename, clue, ','.join(reveal_letters), log_filepath)
+
     c.showPage()
     c.save()
 
