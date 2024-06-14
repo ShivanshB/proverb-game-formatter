@@ -606,23 +606,23 @@ def get_user_input():
         root.destroy()
 
 
-    tk.Label(root, text="Enter pdf filename.").pack()
+    tk.Label(root, text="Enter PDF Filename").pack()
     filename_field = tk.Entry(root, width=50)
     filename_field.pack()
 
-    tk.Label(root, text="Enter proverb.").pack()
+    tk.Label(root, text="Enter Proverb").pack()
     proverb_field = tk.Entry(root, width=50)
     proverb_field.pack()
 
-    tk.Label(root, text="Enter clue.").pack()
+    tk.Label(root, text="Enter Clue").pack()
     clue_field = tk.Entry(root, width=50)
     clue_field.pack()
 
-    tk.Label(root, text="Enter previous day's answer.").pack()
+    tk.Label(root, text="Enter Previous Day's Answer").pack()
     prev_field = tk.Entry(root, width=50)
     prev_field.pack()
 
-    tk.Label(root, text="Enter integers (comma-separated):").pack()
+    tk.Label(root, text="Enter Indices of Letters to Reveal (comma-separated integers):").pack()
     reveal_letters = tk.Entry(root, width=50)
     reveal_letters.pack()
 
