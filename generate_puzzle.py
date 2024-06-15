@@ -1,8 +1,10 @@
 import os
+import sys
 import re
 import csv
 import datetime
 import reportlab
+import subprocess
 import tkinter as tk
 
 from tkinter import messagebox
@@ -496,6 +498,19 @@ def check_log_directory(log_directory):
     else:
         print(f"Log directory already exists at: {log_directory}")
 
+def open_pdf(filepath):
+    try:
+        if sys.platform == "win32":
+            os.startfile(filepath)
+        elif sys.platform == "darwin":  # macOS
+            subprocess.run(["open", filepath], check=True)
+        elif sys.platform.startswith('linux'):
+            subprocess.run(["xdg-open", filepath], check=True)
+        else:
+            raise OSError("Unsupported operating system")
+    except Exception as e:
+        print(f"Failed to open file: {e}")
+
 def generate_puzzle(filename, proverb, clue='', prev='', reveal_letters=[]):
     
     # initialize file structure if not existing
@@ -556,6 +571,8 @@ def generate_puzzle(filename, proverb, clue='', prev='', reveal_letters=[]):
     c.showPage()
     c.save()
 
+    open_pdf(filepath)
+
 def get_user_input():
     # create main window
     root = tk.Tk()
@@ -605,25 +622,28 @@ def get_user_input():
 
         root.destroy()
 
+    # Configure the padding of the window
+    root['padx'] = 20  # Add horizontal padding to the window
+    root['pady'] = 20  # Add vertical padding to the window
 
-    tk.Label(root, text="Enter PDF Filename").pack()
-    filename_field = tk.Entry(root, width=50)
+    tk.Label(root, text="Enter PDF Filename (REQUIRED)").pack()
+    filename_field = tk.Entry(root, width=70)
     filename_field.pack()
 
-    tk.Label(root, text="Enter Proverb").pack()
-    proverb_field = tk.Entry(root, width=50)
+    tk.Label(root, text="Enter Proverb (REQUIRED)").pack()
+    proverb_field = tk.Entry(root, width=70)
     proverb_field.pack()
 
-    tk.Label(root, text="Enter Clue").pack()
-    clue_field = tk.Entry(root, width=50)
+    tk.Label(root, text="Enter Clue (OPTIONAL)").pack()
+    clue_field = tk.Entry(root, width=70)
     clue_field.pack()
 
-    tk.Label(root, text="Enter Previous Day's Answer").pack()
-    prev_field = tk.Entry(root, width=50)
+    tk.Label(root, text="Enter Previous Day's Answer (OPTIONAL)").pack()
+    prev_field = tk.Entry(root, width=70)
     prev_field.pack()
 
-    tk.Label(root, text="Enter Indices of Letters to Reveal (comma-separated integers):").pack()
-    reveal_letters = tk.Entry(root, width=50)
+    tk.Label(root, text="Enter Indices of Letters to Reveal (comma-separated integers, OPTIONAL):").pack()
+    reveal_letters = tk.Entry(root, width=70)
     reveal_letters.pack()
 
     submit_button = tk.Button(root, text="Submit", command=on_submit)
