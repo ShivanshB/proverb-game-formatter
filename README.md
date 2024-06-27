@@ -15,7 +15,7 @@ Generator for the formatting of a proverb based word game. Available for use in 
 2. The log file containing date & time, proverb, clue, the previous day's answer, and the revealed letter indices is found at "Documents/puzzles/logs"
 3. **Important**: If the name entered into "Enter PDF Filename" is the same as the name of an old puzzle already in "Documents/puzzles", it will override the old puzzle pdf. **Make sure that your puzzles have unique names if you do not want this behaviour.**
 
-# How to Run
+# How to Run (MacOS)
 1. Download the .zip file found [here](https://drive.google.com/drive/folders/1lujT_gsKyhypGxpFp44XeJSjKEC-XHuL?usp=sharing).
 2. Double click the .zip file once downloaded to unpack application.
 4. Drag the Application Icon for the "PuzzleGenerator" app into your Applications folder. It may be helpful to also drag it into your Dock and right click --> options --> keep in dock. This will allow for later ease of use.
