@@ -2,6 +2,7 @@ import os
 import sys
 import re
 import csv
+import random
 import datetime
 import reportlab
 import subprocess
@@ -257,6 +258,16 @@ def clean_proverb(proverb):
     n = len(proverb)
     
     return proverb, n
+
+def randomize():
+    # randomly shuffle circles
+    CIRCLES = random.shuffle(CIRCLES)
+
+    # redo character to number mapping
+    for idx, letters in enumerate(CIRCLES):
+        for letter in letters:
+            CHAR_TO_NUM[letter] = idx + 1
+
 
 def draw_footer(c, clue, prev, num_lines):
     # properly format clue  
@@ -519,6 +530,9 @@ def generate_puzzle(filename, proverb, clue='', prev='', reveal_letters=[]):
     # create canvas in correct folder
     filepath = FOLDER + '/' + filename
     c = canvas.Canvas(filepath, pagesize=letter)
+
+    # randomize letters within circles
+    randomize()
 
     # collapses all spaces into single space
     proverb, clue, prev = collapse_spaces([proverb, clue, prev])
