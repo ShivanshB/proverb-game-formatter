@@ -16,7 +16,7 @@ Generator for the formatting of a proverb based word game. Available for use in 
 3. **Important**: If the name entered into "Enter PDF Filename" is the same as the name of an old puzzle already in "Documents/puzzles", it will override the old puzzle pdf. **Make sure that your puzzles have unique names if you do not want this behaviour.**
 
 # How to Run (MacOS)
-1. Download the .zip file found [here](https://drive.google.com/drive/folders/1lujT_gsKyhypGxpFp44XeJSjKEC-XHuL?usp=sharing).
+1. Download the .zip file found [here](https://drive.google.com/file/d/1Jk82-ePx6vxiV7t0NzByj95zSSMibpau/view?usp=sharing).
 2. Double click the .zip file once downloaded to unpack application.
 4. Drag the Application Icon for the "PuzzleGenerator" app into your Applications folder. It may be helpful to also drag it into your Dock and right click --> options --> keep in dock. This will allow for later ease of use.
 5. To boot the application, find the Application logo in Finder. Right click the application logo and click open. If a small user interface opens, you are good. If not, click the application again from your dock.
