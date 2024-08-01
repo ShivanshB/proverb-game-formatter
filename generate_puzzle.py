@@ -261,7 +261,7 @@ def clean_proverb(proverb):
 
 def randomize():
     # randomly shuffle circles
-    CIRCLES = random.shuffle(CIRCLES)
+    random.shuffle(CIRCLES)
 
     # redo character to number mapping
     for idx, letters in enumerate(CIRCLES):
@@ -580,7 +580,9 @@ def generate_puzzle(filename, proverb, clue='', prev='', reveal_letters=[]):
     log_filepath = FOLDER + '/logs/' 
     check_log_directory(log_filepath)
     log_filepath += LOG_FILENAME
-    log_proverb(''.join(proverb), filename, clue, ','.join(reveal_letters), log_filepath)
+
+    reveal_letters_string = ','.join([str(i) for i in reveal_letters])
+    log_proverb(''.join(proverb), filename, clue, reveal_letters_string, log_filepath)
 
     c.showPage()
     c.save()
@@ -615,9 +617,9 @@ def get_user_input():
         try:
             # if the field is empty
             if len(integer_list) == 1 and '' in integer_list:
-                integers = []
+                integer_list = []
             else:
-                integers = [int(num.strip()) for num in integer_list]
+                integer_list = [int(num.strip()) for num in integer_list]
         except ValueError:
             errors.append("Please enter valid integers separated by commas.")
 
