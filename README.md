@@ -11,9 +11,6 @@ Generator for the formatting of a proverb based word game. Available for use in 
 7. When entering the "PDF Filename" into the user interface, make sure that it is in the form "NAME.pdf". If it does not follow this format, the form will tell you and allow you to change the name.
 
 ## Notes
-
-[testshuffle.pdf](https://github.com/user-attachments/files/16490500/testshuffle.pdf)
-
 1. All generated puzzles are automatically put into "Documents/puzzles". Note that if this folder already exists, **it will be overridden**
 2. The log file containing date & time, proverb, clue, the previous day's answer, and the revealed letter indices is found at "Documents/puzzles/logs"
 3. **Important**: If the name entered into "Enter PDF Filename" is the same as the name of an old puzzle already in "Documents/puzzles", it will override the old puzzle pdf. **Make sure that your puzzles have unique names if you do not want this behaviour.**
