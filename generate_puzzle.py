@@ -2,6 +2,7 @@ import os
 import sys
 import re
 import csv
+import string
 import random
 import datetime
 import reportlab
@@ -74,8 +75,6 @@ CHAR_TO_NUM = {'A': 1, 'B': 1, 'C': 1,
                'S': 7, 'T': 7, 'U': 7,
                'V': 8, 'W': 8,
                'X': 9, 'Y': 9, 'Z': 9}
-
-CIRCLES = ['ABC','DEF','GHI','JKL','MNO','PQR','STU','VW','XYZ']
 
 # useful definitions
 #------------------------------------
@@ -184,11 +183,11 @@ def draw_boxes_triangles(c, lines, line_offsets, letter_reveals):
                 # drawing in letter
                 c.drawString(text_x, text_y, num)
 
-def draw_circles(c):
+def draw_circles(c, circles):
     # compute number of circles
-    num_circles = len(CIRCLES)
+    num_circles = len(circles)
     
-    for i, text in enumerate(CIRCLES):
+    for i, text in enumerate(circles):
         # offset to center circles horizontally
         offset = 0.5 * ((CIRCLE_RADIUS * 2) * (num_circles - 1) + (num_circles - 1) * CIRCLE_SPACE)
 
@@ -259,14 +258,31 @@ def clean_proverb(proverb):
     
     return proverb, n
 
-def randomize():
-    # randomly shuffle circles
-    random.shuffle(CIRCLES)
-
+def randomize(letters):
+    # turn 26 capitalized letters into list
+    letters = list(letters)
+    
+    # Shuffle the letters randomly
+    random.shuffle(letters)
+    
+    # Create the groups
+    circles = []
+    
+    # Create 8 groups of 3 letters
+    for _ in range(8):
+        group = letters[:3]
+        circles.append(''.join(group))
+        letters = letters[3:]
+    
+    # The remaining 2 letters go into the final group
+    circles.append(''.join(letters))
+    
     # redo character to number mapping
-    for idx, letters in enumerate(CIRCLES):
+    for idx, letters in enumerate(circles):
         for letter in letters:
             CHAR_TO_NUM[letter] = idx + 1
+    
+    return circles
 
 
 def draw_footer(c, clue, prev, num_lines):
@@ -531,8 +547,8 @@ def generate_puzzle(filename, proverb, clue='', prev='', reveal_letters=[]):
     filepath = FOLDER + '/' + filename
     c = canvas.Canvas(filepath, pagesize=letter)
 
-    # randomize letters within circles
-    randomize()
+    # create randomized groupings of all 26 uppercase letters
+    circles = randomize(string.ascii_uppercase)
 
     # collapses all spaces into single space
     proverb, clue, prev = collapse_spaces([proverb, clue, prev])
@@ -562,7 +578,7 @@ def generate_puzzle(filename, proverb, clue='', prev='', reveal_letters=[]):
     draw_boxes_triangles(c, lines, line_offsets, reveal_letters)
 
     # draw predefined circles
-    draw_circles(c)
+    draw_circles(c, circles)
 
     # draw logo
     draw_logo(c)

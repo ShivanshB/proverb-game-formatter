@@ -35,10 +35,11 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
+    icon=['puzzlegen.icns'],
 )
 app = BUNDLE(
     exe,
     name='PuzzleGenerator.app',
-    icon=None,
+    icon='puzzlegen.icns',
     bundle_identifier=None,
 )
